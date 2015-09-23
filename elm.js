@@ -9452,8 +9452,8 @@ Elm.Update.make = function (_elm) {
          return false;
       }();
    });
-   var nextGrid = F3(function (neighborhood,
-   _v1,
+   var putCell = F3(function (_v1,
+   nextState,
    grid) {
       return function () {
          switch (_v1.ctor)
@@ -9470,8 +9470,28 @@ Elm.Update.make = function (_elm) {
                        case "Nothing":
                        return $Array.empty;}
                     _U.badCase($moduleName,
-                    "between lines 47 and 50");
+                    "between lines 60 and 63");
                  }();
+                 var updatedRow = $Array.toList(A3($Array.set,
+                 _v1._0,
+                 nextState,
+                 row));
+                 return $Array.toList(A3($Array.set,
+                 _v1._1,
+                 updatedRow,
+                 mutableGrid));
+              }();}
+         _U.badCase($moduleName,
+         "between lines 58 and 65");
+      }();
+   });
+   var nextGrid = F3(function (neighborhood,
+   _v8,
+   grid) {
+      return function () {
+         switch (_v8.ctor)
+         {case "_Tuple3":
+            return function () {
                  var _ = neighborhood;
                  var a1 = function () {
                     switch (_.ctor)
@@ -9487,7 +9507,7 @@ Elm.Update.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 43, column 13 to 25");
+                    "on line 50, column 13 to 25");
                  }();
                  var a2 = function () {
                     switch (_.ctor)
@@ -9503,7 +9523,7 @@ Elm.Update.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 43, column 13 to 25");
+                    "on line 50, column 13 to 25");
                  }();
                  var a3 = function () {
                     switch (_.ctor)
@@ -9519,7 +9539,7 @@ Elm.Update.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 43, column 13 to 25");
+                    "on line 50, column 13 to 25");
                  }();
                  var b1 = function () {
                     switch (_.ctor)
@@ -9535,7 +9555,7 @@ Elm.Update.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 43, column 13 to 25");
+                    "on line 50, column 13 to 25");
                  }();
                  var b3 = function () {
                     switch (_.ctor)
@@ -9551,7 +9571,7 @@ Elm.Update.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 43, column 13 to 25");
+                    "on line 50, column 13 to 25");
                  }();
                  var c1 = function () {
                     switch (_.ctor)
@@ -9567,7 +9587,7 @@ Elm.Update.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 43, column 13 to 25");
+                    "on line 50, column 13 to 25");
                  }();
                  var c2 = function () {
                     switch (_.ctor)
@@ -9583,7 +9603,7 @@ Elm.Update.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 43, column 13 to 25");
+                    "on line 50, column 13 to 25");
                  }();
                  var c3 = function () {
                     switch (_.ctor)
@@ -9599,23 +9619,22 @@ Elm.Update.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 43, column 13 to 25");
+                    "on line 50, column 13 to 25");
                  }();
                  var neighborCount = a1 + a2 + a3 + b1 + b3 + c1 + c2 + c3;
                  var nextState = A2(updateCell,
-                 _v1._2,
+                 _v8._2,
                  neighborCount) ? 1 : 0;
-                 var updatedRow = $Array.toList(A3($Array.set,
-                 _v1._0,
+                 return A3(putCell,
+                 {ctor: "_Tuple3"
+                 ,_0: _v8._0
+                 ,_1: _v8._1
+                 ,_2: _v8._2},
                  nextState,
-                 row));
-                 return $Array.toList(A3($Array.set,
-                 _v1._1,
-                 updatedRow,
-                 mutableGrid));
+                 grid);
               }();}
          _U.badCase($moduleName,
-         "between lines 39 and 52");
+         "between lines 46 and 54");
       }();
    });
    var update = F2(function (input,
@@ -9649,9 +9668,25 @@ Elm.Update.make = function (_elm) {
                          return $State.GameOfLife({_: {}
                                                   ,grid: newGrid
                                                   ,size: state._0.size});
-                      }();}
+                      }();
+                    case "Toggle":
+                    switch (input._0.ctor)
+                      {case "_Tuple3":
+                         return function () {
+                              var nextState = input._0._2 ? 0 : 1;
+                              return $State.GameOfLife({_: {}
+                                                       ,grid: A3(putCell,
+                                                       {ctor: "_Tuple3"
+                                                       ,_0: input._0._0
+                                                       ,_1: input._0._1
+                                                       ,_2: input._0._2},
+                                                       nextState,
+                                                       state._0.grid)
+                                                       ,size: state._0.size});
+                           }();}
+                      break;}
                  _U.badCase($moduleName,
-                 "between lines 25 and 35");
+                 "between lines 25 and 42");
               }();
             case "NewState":
             return function () {
@@ -9677,7 +9712,7 @@ Elm.Update.make = function (_elm) {
                  "between lines 13 and 24");
               }();}
          _U.badCase($moduleName,
-         "between lines 11 and 35");
+         "between lines 11 and 42");
       }();
    });
    _elm.Update.values = {_op: _op
