@@ -1683,21 +1683,13 @@ Elm.Input.make = function (_elm) {
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
    $State = Elm.State.make(_elm),
-   $Time = Elm.Time.make(_elm),
-   $Window = Elm.Window.make(_elm);
+   $Time = Elm.Time.make(_elm);
    var toggleMailbox = $Signal.mailbox({ctor: "_Tuple3"
                                        ,_0: 0
                                        ,_1: 0
                                        ,_2: false});
    var toggleAddress = toggleMailbox.address;
    var Noop = {ctor: "Noop"};
-   var Resize = function (a) {
-      return {ctor: "Resize"
-             ,_0: a};
-   };
-   var resizeSignal = A2($Signal.map,
-   Resize,
-   $Window.dimensions);
    var Tick = {ctor: "Tick"};
    var tickSignal = A2($Signal.map,
    $Basics.always(Tick),
@@ -1716,7 +1708,6 @@ Elm.Input.make = function (_elm) {
                        ,toggleAddress: toggleAddress
                        ,Toggle: Toggle
                        ,Tick: Tick
-                       ,Resize: Resize
                        ,Noop: Noop};
    return _elm.Input.values;
 };
@@ -2095,26 +2086,15 @@ Elm.Main.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $State = Elm.State.make(_elm),
    $Update = Elm.Update.make(_elm);
-   var startSize = Elm.Native.Port.make(_elm).inbound("startSize",
-   "(Int, Int)",
-   function (v) {
-      return typeof v === "object" && v instanceof Array ? {ctor: "_Tuple2"
-                                                           ,_0: typeof v[0] === "number" ? v[0] : _U.badPort("a number",
-                                                           v[0])
-                                                           ,_1: typeof v[1] === "number" ? v[1] : _U.badPort("a number",
-                                                           v[1])} : _U.badPort("an array",
-      v);
-   });
    var main = function () {
-      var $ = startSize,
-      width = $._0,
-      height = $._1;
-      var grid = $List.repeat(height / $Render.unitLength | 0)(A2($List.repeat,
-      width / $Render.unitLength | 0,
+      var grid = $List.repeat(200)(A2($List.repeat,
+      200,
       0));
       var state = $State.GameOfLife({_: {}
                                     ,grid: grid
-                                    ,size: startSize});
+                                    ,size: {ctor: "_Tuple2"
+                                           ,_0: 200
+                                           ,_1: 200}});
       return A2($Signal.map,
       $Render.render,
       A3($Signal.foldp,
@@ -8204,7 +8184,7 @@ Elm.Render.make = function (_elm) {
                  clickableForm);
               }();}
          _U.badCase($moduleName,
-         "between lines 32 and 41");
+         "between lines 28 and 37");
       }();
    };
    var render = function (state) {
@@ -8222,18 +8202,18 @@ Elm.Render.make = function (_elm) {
                  width = $._0,
                  height = $._1;
                  return A3($Graphics$Collage.collage,
-                 width * unitLength,
-                 height * unitLength,
+                 1000,
+                 1000,
                  _L.fromArray([$Graphics$Collage.move({ctor: "_Tuple2"
-                                                      ,_0: $Basics.toFloat(width * unitLength)
-                                                      ,_1: $Basics.toFloat(height * unitLength)})(A2(groupMap,
+                                                      ,_0: 1000.0
+                                                      ,_1: 1000.0})(A2(groupMap,
                  renderCell,
                  $State.cells(state._0.grid)))]));
               }();
             case "NewState":
             return $Graphics$Element.show(state);}
          _U.badCase($moduleName,
-         "between lines 14 and 25");
+         "between lines 14 and 21");
       }();
    };
    _elm.Render.values = {_op: _op
@@ -8671,7 +8651,7 @@ Elm.State.make = function (_elm) {
                  }),
                  _v0._1);}
             _U.badCase($moduleName,
-            "on line 90, column 19 to 66");
+            "on line 77, column 19 to 66");
          }();
       },
       grid);
@@ -8698,7 +8678,7 @@ Elm.State.make = function (_elm) {
                  }();
                case "Nothing": return grid;}
             _U.badCase($moduleName,
-            "between lines 74 and 81");
+            "between lines 61 and 68");
          }();
       }();
    };
@@ -8779,7 +8759,7 @@ Elm.State.make = function (_elm) {
                                                                   n,
                                                                   ns));}
                                                              _U.badCase($moduleName,
-                                                             "on line 53, column 36 to 95");
+                                                             "on line 54, column 36 to 95");
                                                           }();
                                                        });
                                                     }();}
@@ -8819,10 +8799,10 @@ Elm.State.make = function (_elm) {
                            break;}
                       break;}
                  _U.badCase($moduleName,
-                 "between lines 39 and 53");
+                 "between lines 40 and 54");
               }();}
          _U.badCase($moduleName,
-         "between lines 39 and 53");
+         "between lines 40 and 54");
       }();
    });
    var rowsToHoods = function (rows) {
@@ -8842,7 +8822,7 @@ Elm.State.make = function (_elm) {
                     _v33._2,
                     _L.fromArray([])));}
                _U.badCase($moduleName,
-               "on line 35, column 67 to 112");
+               "on line 36, column 67 to 112");
             }();
          }($));
       },
@@ -8893,7 +8873,7 @@ Elm.State.make = function (_elm) {
                                         list._1._1._0,
                                         list._1._1._1)));}
                                    _U.badCase($moduleName,
-                                   "on line 31, column 48 to 126");
+                                   "on line 32, column 48 to 126");
                                 }();
                              });}
                         break;}
@@ -8919,7 +8899,7 @@ Elm.State.make = function (_elm) {
                                    list._1._1._0,
                                    list._1._1._1)));}
                               _U.badCase($moduleName,
-                              "on line 32, column 49 to 103");
+                              "on line 33, column 49 to 103");
                            }();
                         });}
                    break;}
@@ -8927,7 +8907,7 @@ Elm.State.make = function (_elm) {
             case "[]":
             return $Trampoline.Done(rows);}
          _U.badCase($moduleName,
-         "between lines 27 and 32");
+         "between lines 28 and 33");
       }();
    });
    var neighboringRows = function (list) {
@@ -9450,7 +9430,6 @@ Elm.Update.make = function (_elm) {
    $Input = Elm.Input.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
-   $Render = Elm.Render.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
    $State = Elm.State.make(_elm);
@@ -9481,7 +9460,7 @@ Elm.Update.make = function (_elm) {
                        case "Nothing":
                        return $Array.empty;}
                     _U.badCase($moduleName,
-                    "between lines 60 and 63");
+                    "between lines 48 and 51");
                  }();
                  var updatedRow = $Array.toList(A3($Array.set,
                  _v1._0,
@@ -9493,7 +9472,7 @@ Elm.Update.make = function (_elm) {
                  mutableGrid));
               }();}
          _U.badCase($moduleName,
-         "between lines 58 and 65");
+         "between lines 46 and 53");
       }();
    });
    var nextGrid = F3(function (neighborhood,
@@ -9518,7 +9497,7 @@ Elm.Update.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 50, column 13 to 25");
+                    "on line 38, column 13 to 25");
                  }();
                  var a2 = function () {
                     switch (_.ctor)
@@ -9534,7 +9513,7 @@ Elm.Update.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 50, column 13 to 25");
+                    "on line 38, column 13 to 25");
                  }();
                  var a3 = function () {
                     switch (_.ctor)
@@ -9550,7 +9529,7 @@ Elm.Update.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 50, column 13 to 25");
+                    "on line 38, column 13 to 25");
                  }();
                  var b1 = function () {
                     switch (_.ctor)
@@ -9566,7 +9545,7 @@ Elm.Update.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 50, column 13 to 25");
+                    "on line 38, column 13 to 25");
                  }();
                  var b3 = function () {
                     switch (_.ctor)
@@ -9582,7 +9561,7 @@ Elm.Update.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 50, column 13 to 25");
+                    "on line 38, column 13 to 25");
                  }();
                  var c1 = function () {
                     switch (_.ctor)
@@ -9598,7 +9577,7 @@ Elm.Update.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 50, column 13 to 25");
+                    "on line 38, column 13 to 25");
                  }();
                  var c2 = function () {
                     switch (_.ctor)
@@ -9614,7 +9593,7 @@ Elm.Update.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 50, column 13 to 25");
+                    "on line 38, column 13 to 25");
                  }();
                  var c3 = function () {
                     switch (_.ctor)
@@ -9630,7 +9609,7 @@ Elm.Update.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 50, column 13 to 25");
+                    "on line 38, column 13 to 25");
                  }();
                  var neighborCount = a1 + a2 + a3 + b1 + b3 + c1 + c2 + c3;
                  var nextState = A2(updateCell,
@@ -9645,7 +9624,7 @@ Elm.Update.make = function (_elm) {
                  grid);
               }();}
          _U.badCase($moduleName,
-         "between lines 46 and 54");
+         "between lines 34 and 42");
       }();
    });
    var update = F2(function (input,
@@ -9697,33 +9676,10 @@ Elm.Update.make = function (_elm) {
                            }();}
                       break;}
                  _U.badCase($moduleName,
-                 "between lines 25 and 42");
-              }();
-            case "NewState":
-            return function () {
-                 switch (input.ctor)
-                 {case "Resize":
-                    switch (input._0.ctor)
-                      {case "_Tuple2":
-                         return function () {
-                              var ny = input._0._1 / $Render.unitLength | 0;
-                              var nx = input._0._0 / $Render.unitLength | 0;
-                              var row = A2($List.repeat,nx,0);
-                              var grid = A2($List.repeat,
-                              ny,
-                              row);
-                              return $State.GameOfLife({_: {}
-                                                       ,grid: grid
-                                                       ,size: {ctor: "_Tuple2"
-                                                              ,_0: nx
-                                                              ,_1: ny}});
-                           }();}
-                      break;}
-                 _U.badCase($moduleName,
-                 "between lines 13 and 24");
+                 "between lines 13 and 30");
               }();}
          _U.badCase($moduleName,
-         "between lines 11 and 42");
+         "between lines 11 and 30");
       }();
    });
    _elm.Update.values = {_op: _op

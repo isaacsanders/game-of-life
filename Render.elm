@@ -18,11 +18,7 @@ render state =
                 (width, height) = size
                 groupMap = (\fn l -> GC.group <| L.map fn l)
             in
-                GC.collage
-                    (width * unitLength)
-                    (height * unitLength)
-                    [ GC.move (toFloat (width * unitLength), toFloat (height * unitLength))
-                    <| groupMap renderCell (St.cells grid) ]
+                GC.collage 1000 1000 [ GC.move (1000.0, 1000.0) <| groupMap renderCell (St.cells grid) ]
 
 unitLength : Int
 unitLength = 5

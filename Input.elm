@@ -1,4 +1,4 @@
-module Input (Input(Toggle, Tick, Resize, Noop), inputs, toggleAddress) where
+module Input (Input(Toggle, Tick, Noop), inputs, toggleAddress) where
 
 import Signal as S
 import State as St
@@ -7,7 +7,6 @@ import Window as W
 
 type Input = Toggle St.Cell
            | Tick
-           | Resize (Int, Int)
            | Noop
 
 inputs : S.Signal Input
@@ -27,5 +26,5 @@ tickSignal : S.Signal Input
 tickSignal = S.map (always Tick) (T.every (0.5 * T.second))
 
 -- Resize
-resizeSignal : S.Signal Input
-resizeSignal = S.map Resize W.dimensions
+-- resizeSignal : S.Signal Input
+-- resizeSignal = S.map Resize W.dimensions

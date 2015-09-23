@@ -9,18 +9,6 @@ import Array as A
 update : I.Input -> S.State -> S.State
 update input state =
     case state of
-        S.NewState ->
-            case input of
-                I.Resize (width, height) ->
-                    let
-                        nx = width // R.unitLength
-                        ny = height // R.unitLength
-                        row = L.repeat nx 0
-                        grid = L.repeat ny row
-                    in
-                        S.GameOfLife { grid = grid
-                                     , size = (nx, ny)
-                                     }
         S.GameOfLife {size, grid} ->
             case input of
                 I.Toggle (x, y, isAlive) ->

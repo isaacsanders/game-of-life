@@ -9,7 +9,8 @@ type State = NewState | GameOfLife { size: Size
                                    }
 
 type alias Size = (Int, Int)
-type alias Grid = List (List Int)
+type alias Grid = List Row
+type alias Row = List Int
 type alias Cell = (Int, Int, Bool)
 type alias Neighborhood = ((Int, Int, Int)
                           ,(Int, Int, Int)
@@ -19,10 +20,10 @@ type alias Neighborhood = ((Int, Int, Int)
 neighborhoods : Grid -> List Neighborhood
 neighborhoods = rowsToHoods << neighboringRows
 
-neighboringRows : Grid -> List (List Int, List Int, List Int)
+neighboringRows : Grid -> List (Row, Row, Row)
 neighboringRows list = L.reverse <| T.trampoline (neighboringRows' [] ([]::list))
 
-neighboringRows' : List (List Int, List Int, List Int) -> List (List Int) -> T.Trampoline (List (List Int, List Int, List Int))
+neighboringRows' : List (Row, Row, Row) -> List (Row) -> T.Trampoline (List (Row, Row, Row))
 neighboringRows' rows list =
     case list of
         [] -> T.Done rows
@@ -31,10 +32,10 @@ neighboringRows' rows list =
         []::hd1::hd2::tl -> T.Continue (\() -> neighboringRows' (((L.repeat (L.length hd1) 0), hd1, hd2)::rows) (hd1::hd2::tl))
         hd1::hd2::hd3::tl -> T.Continue (\() -> neighboringRows' ((hd1, hd2, hd3)::rows) (hd2::hd3::tl))
 
-rowsToHoods : List (List Int, List Int, List Int) -> List Neighborhood
+rowsToHoods : List (Row, Row, Row) -> List Neighborhood
 rowsToHoods rows = L.concat <| L.map (L.reverse << (\(a, b, c) -> T.trampoline (rowsToHoods' (0, 0, 0) a b c []))) rows
 
-rowsToHoods' : (Int, Int, Int) -> List Int -> List Int -> List Int -> List Neighborhood -> T.Trampoline (List Neighborhood)
+rowsToHoods' : (Int, Int, Int) -> Row -> Row -> Row -> List Neighborhood -> T.Trampoline (List Neighborhood)
 rowsToHoods' (a1, b1, c1) a b c ns =
     case (a, b, c) of
         ([], [], []) -> T.Done ns
@@ -51,20 +52,6 @@ rowsToHoods' (a1, b1, c1) a b c ns =
                 n = ((a1, a2, a3), (b1, b2, b3), (c1, c2, c3))
             in
                 T.Continue (\() -> rowsToHoods' (a2, b2, c2) (a3::at) (b3::bt) (c3::ct) (n::ns))
-
--- neighborshoods : Grid -> List (List (List Int))
--- neighborshoods grid =
---     L.map neighboringRows (>> neighboringRows grid)
-
--- neighborCounts : Grid -> Grid
--- neighborCounts grid =
---     let
---         sumZip = L.map (uncurry (L.map2 (+)))
---         rowNeighbors = sumZip (neighboringRows grid)
---         colNeighbors = transpose (sumZip (neighboringRows (transpose grid)))
---         cornerNeighbors = L.map rotl grid
---     in
---         sumZip ((L.map2 (,)) colNeighbors rowNeighbors)
 
 transpose : Grid -> Grid
 transpose grid =

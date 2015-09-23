@@ -21,13 +21,10 @@ import List as L
 
 main =
     let
-        (width, height) = startSize
-        grid = L.repeat (height // R.unitLength)
-            <| L.repeat (width // R.unitLength) 0
+        grid = L.repeat 200
+            <| L.repeat 200 0
         state = St.GameOfLife { grid = grid
-                              , size = startSize
+                              , size = (200, 200)
                               }
     in
         S.map R.render (S.foldp U.update state I.inputs)
-
-port startSize : (Int, Int)
