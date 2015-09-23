@@ -1,0 +1,261 @@
+Elm.Update = Elm.Update || {};
+Elm.Update.make = function (_elm) {
+   "use strict";
+   _elm.Update = _elm.Update || {};
+   if (_elm.Update.values)
+   return _elm.Update.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Update",
+   $Array = Elm.Array.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Input = Elm.Input.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Render = Elm.Render.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $State = Elm.State.make(_elm);
+   var updateCell = F2(function (isAlive,
+   neighborCount) {
+      return function () {
+         switch (neighborCount)
+         {case 2: return isAlive;
+            case 3: return true;}
+         return false;
+      }();
+   });
+   var nextGrid = F3(function (neighborhood,
+   _v1,
+   grid) {
+      return function () {
+         switch (_v1.ctor)
+         {case "_Tuple3":
+            return function () {
+                 var mutableGrid = $Array.fromList(grid);
+                 var row = function () {
+                    var _v6 = A2($Array.get,
+                    _v1._1,
+                    mutableGrid);
+                    switch (_v6.ctor)
+                    {case "Just":
+                       return $Array.fromList(_v6._0);
+                       case "Nothing":
+                       return $Array.empty;}
+                    _U.badCase($moduleName,
+                    "between lines 47 and 50");
+                 }();
+                 var _ = neighborhood;
+                 var a1 = function () {
+                    switch (_.ctor)
+                    {case "_Tuple3":
+                       switch (_._0.ctor)
+                         {case "_Tuple3":
+                            switch (_._1.ctor)
+                              {case "_Tuple3":
+                                 switch (_._2.ctor)
+                                   {case "_Tuple3":
+                                      return _._0._0;}
+                                   break;}
+                              break;}
+                         break;}
+                    _U.badCase($moduleName,
+                    "on line 43, column 13 to 25");
+                 }();
+                 var a2 = function () {
+                    switch (_.ctor)
+                    {case "_Tuple3":
+                       switch (_._0.ctor)
+                         {case "_Tuple3":
+                            switch (_._1.ctor)
+                              {case "_Tuple3":
+                                 switch (_._2.ctor)
+                                   {case "_Tuple3":
+                                      return _._0._1;}
+                                   break;}
+                              break;}
+                         break;}
+                    _U.badCase($moduleName,
+                    "on line 43, column 13 to 25");
+                 }();
+                 var a3 = function () {
+                    switch (_.ctor)
+                    {case "_Tuple3":
+                       switch (_._0.ctor)
+                         {case "_Tuple3":
+                            switch (_._1.ctor)
+                              {case "_Tuple3":
+                                 switch (_._2.ctor)
+                                   {case "_Tuple3":
+                                      return _._0._2;}
+                                   break;}
+                              break;}
+                         break;}
+                    _U.badCase($moduleName,
+                    "on line 43, column 13 to 25");
+                 }();
+                 var b1 = function () {
+                    switch (_.ctor)
+                    {case "_Tuple3":
+                       switch (_._0.ctor)
+                         {case "_Tuple3":
+                            switch (_._1.ctor)
+                              {case "_Tuple3":
+                                 switch (_._2.ctor)
+                                   {case "_Tuple3":
+                                      return _._1._0;}
+                                   break;}
+                              break;}
+                         break;}
+                    _U.badCase($moduleName,
+                    "on line 43, column 13 to 25");
+                 }();
+                 var b3 = function () {
+                    switch (_.ctor)
+                    {case "_Tuple3":
+                       switch (_._0.ctor)
+                         {case "_Tuple3":
+                            switch (_._1.ctor)
+                              {case "_Tuple3":
+                                 switch (_._2.ctor)
+                                   {case "_Tuple3":
+                                      return _._1._2;}
+                                   break;}
+                              break;}
+                         break;}
+                    _U.badCase($moduleName,
+                    "on line 43, column 13 to 25");
+                 }();
+                 var c1 = function () {
+                    switch (_.ctor)
+                    {case "_Tuple3":
+                       switch (_._0.ctor)
+                         {case "_Tuple3":
+                            switch (_._1.ctor)
+                              {case "_Tuple3":
+                                 switch (_._2.ctor)
+                                   {case "_Tuple3":
+                                      return _._2._0;}
+                                   break;}
+                              break;}
+                         break;}
+                    _U.badCase($moduleName,
+                    "on line 43, column 13 to 25");
+                 }();
+                 var c2 = function () {
+                    switch (_.ctor)
+                    {case "_Tuple3":
+                       switch (_._0.ctor)
+                         {case "_Tuple3":
+                            switch (_._1.ctor)
+                              {case "_Tuple3":
+                                 switch (_._2.ctor)
+                                   {case "_Tuple3":
+                                      return _._2._1;}
+                                   break;}
+                              break;}
+                         break;}
+                    _U.badCase($moduleName,
+                    "on line 43, column 13 to 25");
+                 }();
+                 var c3 = function () {
+                    switch (_.ctor)
+                    {case "_Tuple3":
+                       switch (_._0.ctor)
+                         {case "_Tuple3":
+                            switch (_._1.ctor)
+                              {case "_Tuple3":
+                                 switch (_._2.ctor)
+                                   {case "_Tuple3":
+                                      return _._2._2;}
+                                   break;}
+                              break;}
+                         break;}
+                    _U.badCase($moduleName,
+                    "on line 43, column 13 to 25");
+                 }();
+                 var neighborCount = a1 + a2 + a3 + b1 + b3 + c1 + c2 + c3;
+                 var nextState = A2(updateCell,
+                 _v1._2,
+                 neighborCount) ? 1 : 0;
+                 var updatedRow = $Array.toList(A3($Array.set,
+                 _v1._0,
+                 nextState,
+                 row));
+                 return $Array.toList(A3($Array.set,
+                 _v1._1,
+                 updatedRow,
+                 mutableGrid));
+              }();}
+         _U.badCase($moduleName,
+         "between lines 39 and 52");
+      }();
+   });
+   var update = F2(function (input,
+   state) {
+      return function () {
+         switch (state.ctor)
+         {case "GameOfLife":
+            return function () {
+                 switch (input.ctor)
+                 {case "Tick":
+                    return function () {
+                         var cells = $State.cells(state._0.grid);
+                         var neighborhoods = $State.neighborhoods(state._0.grid);
+                         var $ = state._0.size,
+                         width = $._0,
+                         height = $._1;
+                         var newGrid = A2($List.foldl,
+                         $Basics.uncurry(nextGrid),
+                         A2($List.repeat,
+                         height,
+                         A2($List.repeat,
+                         width,
+                         0)))(A3($List.map2,
+                         F2(function (v0,v1) {
+                            return {ctor: "_Tuple2"
+                                   ,_0: v0
+                                   ,_1: v1};
+                         }),
+                         neighborhoods,
+                         cells));
+                         return $State.GameOfLife({_: {}
+                                                  ,grid: newGrid
+                                                  ,size: state._0.size});
+                      }();}
+                 _U.badCase($moduleName,
+                 "between lines 25 and 35");
+              }();
+            case "NewState":
+            return function () {
+                 switch (input.ctor)
+                 {case "Resize":
+                    switch (input._0.ctor)
+                      {case "_Tuple2":
+                         return function () {
+                              var ny = input._0._1 / $Render.unitLength | 0;
+                              var nx = input._0._0 / $Render.unitLength | 0;
+                              var row = A2($List.repeat,nx,0);
+                              var grid = A2($List.repeat,
+                              ny,
+                              row);
+                              return $State.GameOfLife({_: {}
+                                                       ,grid: grid
+                                                       ,size: {ctor: "_Tuple2"
+                                                              ,_0: nx
+                                                              ,_1: ny}});
+                           }();}
+                      break;}
+                 _U.badCase($moduleName,
+                 "between lines 13 and 24");
+              }();}
+         _U.badCase($moduleName,
+         "between lines 11 and 35");
+      }();
+   });
+   _elm.Update.values = {_op: _op
+                        ,update: update};
+   return _elm.Update.values;
+};

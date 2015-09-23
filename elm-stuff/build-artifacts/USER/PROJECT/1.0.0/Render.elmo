@@ -1,0 +1,95 @@
+Elm.Render = Elm.Render || {};
+Elm.Render.make = function (_elm) {
+   "use strict";
+   _elm.Render = _elm.Render || {};
+   if (_elm.Render.values)
+   return _elm.Render.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Render",
+   $Basics = Elm.Basics.make(_elm),
+   $Color = Elm.Color.make(_elm),
+   $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
+   $Graphics$Element = Elm.Graphics.Element.make(_elm),
+   $Graphics$Input = Elm.Graphics.Input.make(_elm),
+   $Input = Elm.Input.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $State = Elm.State.make(_elm);
+   var deadCellLineStyle = $Graphics$Collage.solid($Color.black);
+   var deadCell = function (unitLength) {
+      return A2($Graphics$Collage.outlined,
+      deadCellLineStyle,
+      $Graphics$Collage.square($Basics.toFloat(unitLength)));
+   };
+   var liveCell = function (unitLength) {
+      return A2($Graphics$Collage.filled,
+      $Color.black,
+      $Graphics$Collage.square($Basics.toFloat(unitLength)));
+   };
+   var unitLength = 5;
+   var renderCell = function (_v0) {
+      return function () {
+         switch (_v0.ctor)
+         {case "_Tuple3":
+            return function () {
+                 var dy = _v0._1 * unitLength;
+                 var dx = _v0._0 * unitLength;
+                 var clickMessage = A2($Signal.message,
+                 $Input.toggleAddress,
+                 {ctor: "_Tuple3"
+                 ,_0: _v0._0
+                 ,_1: _v0._1
+                 ,_2: _v0._2});
+                 var form = _v0._2 ? liveCell(unitLength) : deadCell(unitLength);
+                 var element = A3($Graphics$Collage.collage,
+                 unitLength,
+                 unitLength,
+                 _L.fromArray([form]));
+                 var clickableElement = A2($Graphics$Input.clickable,
+                 clickMessage,
+                 element);
+                 var clickableForm = $Graphics$Collage.toForm(clickableElement);
+                 return A2($Graphics$Collage.move,
+                 {ctor: "_Tuple2"
+                 ,_0: $Basics.toFloat(dx)
+                 ,_1: $Basics.toFloat(dy)},
+                 clickableForm);
+              }();}
+         _U.badCase($moduleName,
+         "between lines 27 and 36");
+      }();
+   };
+   var render = function (state) {
+      return function () {
+         switch (state.ctor)
+         {case "GameOfLife":
+            return function () {
+                 var groupMap = F2(function (fn,
+                 l) {
+                    return $Graphics$Collage.group(A2($List.map,
+                    fn,
+                    l));
+                 });
+                 return A3($Graphics$Collage.collage,
+                 500,
+                 500,
+                 _L.fromArray([A2(groupMap,
+                 renderCell,
+                 $State.cells(state._0.grid))]));
+              }();
+            case "NewState":
+            return $Graphics$Element.show(state);}
+         _U.badCase($moduleName,
+         "between lines 14 and 20");
+      }();
+   };
+   _elm.Render.values = {_op: _op
+                        ,render: render
+                        ,unitLength: unitLength};
+   return _elm.Render.values;
+};
