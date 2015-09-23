@@ -21,7 +21,8 @@ render state =
                 GC.collage
                     (width * unitLength)
                     (height * unitLength)
-                    [ groupMap renderCell (St.cells grid) ]
+                    [ GC.move (toFloat (width * unitLength), toFloat (height * unitLength))
+                    <| groupMap renderCell (St.cells grid) ]
 
 unitLength : Int
 unitLength = 5
@@ -37,7 +38,7 @@ renderCell (x, y, isAlive) =
         dx = x * unitLength
         dy = y * unitLength
     in
-        GC.move (toFloat dx, toFloat dy) clickableForm
+        GC.move (toFloat dx, toFloat -dy) clickableForm
 
 liveCell : Int -> GC.Form
 liveCell unitLength = GC.filled C.black (GC.square <| toFloat unitLength)

@@ -8200,11 +8200,11 @@ Elm.Render.make = function (_elm) {
                  return A2($Graphics$Collage.move,
                  {ctor: "_Tuple2"
                  ,_0: $Basics.toFloat(dx)
-                 ,_1: $Basics.toFloat(dy)},
+                 ,_1: $Basics.toFloat(0 - dy)},
                  clickableForm);
               }();}
          _U.badCase($moduleName,
-         "between lines 31 and 40");
+         "between lines 32 and 41");
       }();
    };
    var render = function (state) {
@@ -8224,14 +8224,16 @@ Elm.Render.make = function (_elm) {
                  return A3($Graphics$Collage.collage,
                  width * unitLength,
                  height * unitLength,
-                 _L.fromArray([A2(groupMap,
+                 _L.fromArray([$Graphics$Collage.move({ctor: "_Tuple2"
+                                                      ,_0: $Basics.toFloat(width * unitLength)
+                                                      ,_1: $Basics.toFloat(height * unitLength)})(A2(groupMap,
                  renderCell,
-                 $State.cells(state._0.grid))]));
+                 $State.cells(state._0.grid)))]));
               }();
             case "NewState":
             return $Graphics$Element.show(state);}
          _U.badCase($moduleName,
-         "between lines 14 and 24");
+         "between lines 14 and 25");
       }();
    };
    _elm.Render.values = {_op: _op
