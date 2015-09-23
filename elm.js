@@ -2095,20 +2095,26 @@ Elm.Main.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $State = Elm.State.make(_elm),
    $Update = Elm.Update.make(_elm);
+   var startSize = Elm.Native.Port.make(_elm).inbound("startSize",
+   "(Int, Int)",
+   function (v) {
+      return typeof v === "object" && v instanceof Array ? {ctor: "_Tuple2"
+                                                           ,_0: typeof v[0] === "number" ? v[0] : _U.badPort("a number",
+                                                           v[0])
+                                                           ,_1: typeof v[1] === "number" ? v[1] : _U.badPort("a number",
+                                                           v[1])} : _U.badPort("an array",
+      v);
+   });
    var main = function () {
-      var grid = _L.fromArray([_L.fromArray([0
-                                            ,0
-                                            ,0
-                                            ,1])
-                              ,_L.fromArray([0,0,1,0])
-                              ,_L.fromArray([0,0,1,1])
-                              ,_L.fromArray([0,1,0,0])]);
-      var size = {ctor: "_Tuple2"
-                 ,_0: 4
-                 ,_1: 4};
+      var $ = startSize,
+      width = $._0,
+      height = $._1;
+      var grid = $List.repeat(height / $Render.unitLength | 0)(A2($List.repeat,
+      width / $Render.unitLength | 0,
+      0));
       var state = $State.GameOfLife({_: {}
                                     ,grid: grid
-                                    ,size: size});
+                                    ,size: startSize});
       return A2($Signal.map,
       $Render.render,
       A3($Signal.foldp,
@@ -8198,7 +8204,7 @@ Elm.Render.make = function (_elm) {
                  clickableForm);
               }();}
          _U.badCase($moduleName,
-         "between lines 27 and 36");
+         "between lines 31 and 40");
       }();
    };
    var render = function (state) {
@@ -8212,9 +8218,12 @@ Elm.Render.make = function (_elm) {
                     fn,
                     l));
                  });
+                 var $ = state._0.size,
+                 width = $._0,
+                 height = $._1;
                  return A3($Graphics$Collage.collage,
-                 500,
-                 500,
+                 width * unitLength,
+                 height * unitLength,
                  _L.fromArray([A2(groupMap,
                  renderCell,
                  $State.cells(state._0.grid))]));
@@ -8222,7 +8231,7 @@ Elm.Render.make = function (_elm) {
             case "NewState":
             return $Graphics$Element.show(state);}
          _U.badCase($moduleName,
-         "between lines 14 and 20");
+         "between lines 14 and 24");
       }();
    };
    _elm.Render.values = {_op: _op

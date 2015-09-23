@@ -21,14 +21,13 @@ import List as L
 
 main =
     let
-        size = (4, 4)
-        grid = [[0, 0, 0, 1]
-               ,[0, 0, 1, 0]
-               ,[0, 0, 1, 1]
-               ,[0, 1, 0, 0]
-               ]
+        (width, height) = startSize
+        grid = L.repeat (height // R.unitLength)
+            <| L.repeat (width // R.unitLength) 0
         state = St.GameOfLife { grid = grid
-                              , size = size
+                              , size = startSize
                               }
     in
         S.map R.render (S.foldp U.update state I.inputs)
+
+port startSize : (Int, Int)

@@ -13,11 +13,15 @@ render : St.State -> GE.Element
 render state =
     case state of
         St.NewState -> GE.show state
-        St.GameOfLife {grid} ->
+        St.GameOfLife {grid,size} ->
             let
+                (width, height) = size
                 groupMap = (\fn l -> GC.group <| L.map fn l)
             in
-                GC.collage 500 500 [ groupMap renderCell (St.cells grid) ]
+                GC.collage
+                    (width * unitLength)
+                    (height * unitLength)
+                    [ groupMap renderCell (St.cells grid) ]
 
 unitLength : Int
 unitLength = 5
