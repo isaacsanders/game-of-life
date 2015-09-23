@@ -23,6 +23,13 @@ update input state =
                                      }
         S.GameOfLife {size, grid} ->
             case input of
+                I.Toggle (x, y, isAlive) ->
+                    let
+                        nextState = if isAlive then 0 else 1
+                    in
+                        S.GameOfLife { grid = putCell (x, y, isAlive) nextState grid
+                                     , size = size
+                                     }
                 I.Tick ->
                     let
                         (width, height) = size
@@ -43,6 +50,12 @@ nextGrid neighborhood (x, y, isAlive) grid =
         ) = neighborhood
         neighborCount = a1 + a2 + a3 + b1 + b3 + c1 + c2 + c3
         nextState = if updateCell isAlive neighborCount then 1 else 0
+    in
+        putCell (x, y, isAlive) nextState grid
+
+putCell : S.Cell -> Int -> S.Grid -> S.Grid
+putCell (x, y, isAlive) nextState grid =
+    let
         mutableGrid = (A.fromList grid)
         row = case A.get y mutableGrid of
             Just r -> A.fromList r
