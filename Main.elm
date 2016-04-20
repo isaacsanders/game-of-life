@@ -21,10 +21,11 @@ import List as L
 
 main =
     let
-        grid = L.repeat 200
-            <| L.repeat 200 0
+        grid = L.repeat 20
+            <| L.repeat 20 0
         state = St.GameOfLife { grid = grid
-                              , size = (200, 200)
+                              , size = (20, 20)
+                              , running = False
                               }
     in
         S.map R.render (S.foldp U.update state I.inputs)

@@ -9,7 +9,7 @@ import Array as A
 update : I.Input -> S.State -> S.State
 update input state =
     case state of
-        S.GameOfLife {size, grid} ->
+        S.GameOfLife {size, grid, running} ->
             case input of
                 I.Toggle (x, y, isAlive) ->
                     let
@@ -17,6 +17,7 @@ update input state =
                     in
                         S.GameOfLife { grid = putCell (x, y, isAlive) nextState grid
                                      , size = size
+                                     , running = running
                                      }
                 I.Tick ->
                     let
@@ -27,6 +28,7 @@ update input state =
                     in
                         S.GameOfLife { grid = newGrid
                                      , size = size
+                                     , running = running
                                      }
 
 nextGrid : S.Neighborhood -> S.Cell -> S.Grid -> S.Grid

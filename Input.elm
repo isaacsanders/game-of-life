@@ -23,7 +23,7 @@ toggleAddress = toggleMailbox.address
 
 -- Tick
 tickSignal : S.Signal Input
-tickSignal = S.map (always Tick) (T.every (0.5 * T.second))
+tickSignal = S.map (always Tick) (T.fps 2)
 
 -- Resize
 -- resizeSignal : S.Signal Input

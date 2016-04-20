@@ -1693,7 +1693,7 @@ Elm.Input.make = function (_elm) {
    var Tick = {ctor: "Tick"};
    var tickSignal = A2($Signal.map,
    $Basics.always(Tick),
-   $Time.every(0.5 * $Time.second));
+   $Time.fps(2));
    var Toggle = function (a) {
       return {ctor: "Toggle"
              ,_0: a};
@@ -2087,14 +2087,14 @@ Elm.Main.make = function (_elm) {
    $State = Elm.State.make(_elm),
    $Update = Elm.Update.make(_elm);
    var main = function () {
-      var grid = $List.repeat(200)(A2($List.repeat,
-      200,
+      var grid = $List.repeat(20)(A2($List.repeat,
+      20,
       0));
       var state = $State.GameOfLife({_: {}
                                     ,grid: grid
                                     ,size: {ctor: "_Tuple2"
-                                           ,_0: 200
-                                           ,_1: 200}});
+                                           ,_0: 20
+                                           ,_1: 20}});
       return A2($Signal.map,
       $Render.render,
       A3($Signal.foldp,
@@ -8202,13 +8202,11 @@ Elm.Render.make = function (_elm) {
                  width = $._0,
                  height = $._1;
                  return A3($Graphics$Collage.collage,
-                 1000,
-                 1000,
-                 _L.fromArray([$Graphics$Collage.move({ctor: "_Tuple2"
-                                                      ,_0: 1000.0
-                                                      ,_1: 1000.0})(A2(groupMap,
+                 500,
+                 500,
+                 _L.fromArray([A2(groupMap,
                  renderCell,
-                 $State.cells(state._0.grid)))]));
+                 $State.cells(state._0.grid))]));
               }();
             case "NewState":
             return $Graphics$Element.show(state);}

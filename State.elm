@@ -6,6 +6,7 @@ import Trampoline as T
 
 type State = NewState | GameOfLife { size: Size
                                    , grid: Grid
+                                   , running: Bool
                                    }
 
 type alias Size = (Int, Int)
